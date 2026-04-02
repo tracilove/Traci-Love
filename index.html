@@ -1,10 +1,286 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Site</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Traci Love</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #dff3ff; /* pale sky blue */
+      color: #333;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 2px solid #cc0000;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    figure.media {
+      margin: 0;
+      padding: 16px;
+    }
+
+    .img-clip {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .img-clip img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 640px;
+      object-fit: cover;
+    }
+
+    h1 {
+      margin: 0.5em 0 0.2em;
+      font-size: 2em;
+      color: #cc0000;
+    }
+
+    .tagline {
+      margin-bottom: 1em;
+      font-size: 1.1em;
+    }
+
+    .cta {
+      display: inline-block;
+      background: #cc0000;
+      color: #fff;
+      padding: 1em 2em;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 12px;
+      font-size: 1.1em;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .cta:hover {
+      background: #a80000;
+      transform: scale(1.03);
+    }
+
+    .legal {
+      margin: 1.5em auto;
+      max-width: 52ch;
+      font-size: 0.85rem;
+      color: #444;
+    }
+
+    footer {
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    /* Spinner */
+    #spinner-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(255,255,255,.85);
+      z-index: 9999;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 6px solid #ccc;
+      border-top: 6px solid #cc0000;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Dialog */
+    #warning-dialog {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,0.5);
+      z-index: 10000;
+    }
+
+    .dialog-box {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,.2);
+    }
+
+    .dialog-box h2 {
+      margin-top: 0;
+      color: #cc0000;
+    }
+
+    .dialog-buttons {
+      margin-top: 1.2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .dialog-buttons button {
+      padding: .6rem 1.2rem;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .ok {
+      background: #cc0000;
+      color: #fff;
+    }
+
+    .ok:hover {
+      background: #a80000;
+    }
+
+    .cancel {
+      background: #ccc;
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      h1 { font-size: 1.6rem; }
+      .cta { font-size: 1rem; padding: 0.9rem 1.4rem; }
+      .img-clip img { max-height: 520px; }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Hello world 👋</h1>
-  <p>My new site is live!</p>
+  <div class="wrap">
+    <main class="card">
+
+      <figure class="media">
+        <div class="img-clip">
+          <!-- IMPORTANT: upload your image to repo as traci-love.jpg -->
+          <img src="traci-love.jpg" alt="Traci Love" />
+        </div>
+      </figure>
+
+      <div class="content">
+        <h1>Traci Love</h1>
+        <p class="tagline">The only place I hangout to chat. 💋</p>
+
+        <button id="cta" class="cta">
+          CLICK HERE! <br>
+          Step into my world, you'll never want to leave!
+        </button>
+
+        <p class="legal">
+          <strong>Warning:</strong> 18+ content. By clicking, you confirm you are of legal age.
+        </p>
+      </div>
+
+      <footer>
+        © 2026 Traci Love · All rights reserved<br>
+        <span style="font-size: 0.75rem; opacity: 0.8;">
+          Protected by <a href="https://branditscan.com/" target="_blank" style="color:#777;">BranditScan</a>
+        </span>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Spinner -->
+  <div id="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Warning Dialog -->
+  <div id="warning-dialog">
+    <div class="dialog-box">
+      <h2>18+ Content Warning</h2>
+      <p>This site contains adult material. Continue?</p>
+      <div class="dialog-buttons">
+        <button class="ok">OK</button>
+        <button class="cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function detectSource() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("utm_source")) return urlParams.get("utm_source");
+
+      const ref = (document.referrer || "").toLowerCase();
+      if (ref.includes("instagram.com")) return "instagram";
+      if (ref.includes("facebook.com")) return "facebook";
+      if (ref.includes("reddit.com")) return "reddit";
+      if (ref.includes("x.com") || ref.includes("twitter.com")) return "x";
+      if (ref.includes("bsky.app")) return "bluesky";
+      return "default";
+    }
+
+    function getRedirectURL(source) {
+      switch (source) {
+        case "instagram": return "https://instagram.tracilovestoplay.com/traci04";
+        case "reddit": return "https://reddit.tracilovestoplay.com/traci05";
+        case "x":
+        case "twitter": return "https://x.tracilovestoplay.com/traci12";
+        case "bluesky": return "https://bluesky.tracilovestoplay.com/traci13";
+        default: return "https://connect.tracilovestoplay.com/traci01";
+      }
+    }
+
+    const cta = document.getElementById("cta");
+    const spinner = document.getElementById("spinner-overlay");
+    const dialog = document.getElementById("warning-dialog");
+
+    const okBtn = dialog.querySelector(".ok");
+    const cancelBtn = dialog.querySelector(".cancel");
+
+    cta.addEventListener("click", () => {
+      dialog.style.display = "grid";
+    });
+
+    okBtn.addEventListener("click", () => {
+      dialog.style.display = "none";
+      spinner.style.display = "grid";
+
+      const source = detectSource();
+      const redirectURL = getRedirectURL(source);
+
+      setTimeout(() => {
+        window.location.href = redirectURL;
+      }, 1200);
+    });
+
+    cancelBtn.addEventListener("click", () => {
+      dialog.style.display = "none";
+    });
+  </script>
 </body>
 </html>
