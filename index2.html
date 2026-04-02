@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Traci Love</title>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: system-ui, sans-serif;
+    background: #dff3ff;
+    color: #fff;
+  }
+
+  /* HERO IMAGE BACKGROUND */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  .hero img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* DARK OVERLAY */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.3),
+      rgba(0,0,0,0.6)
+    );
+  }
+
+  /* CONTENT */
+  .content {
+    position: relative;
+    z-index: 2;
+    max-width: 420px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.4em;
+  }
+
+  .tagline {
+    font-size: 1.15rem;
+    margin-bottom: 1.5em;
+    opacity: 0.95;
+  }
+
+  /* CTA BUTTON */
+  .cta {
+    display: block;
+    width: 100%;
+    background: #cc0000;
+    color: #fff;
+    padding: 1.2em;
+    font-size: 1.15rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .cta:hover {
+    background: #a80000;
+    transform: scale(1.03);
+  }
+
+  /* SUBTEXT */
+  .subtext {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.85;
+  }
+
+  /* FOOTER */
+  .footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    font-size: 0.7rem;
+    opacity: 0.7;
+  }
+
+  /* SPINNER */
+  #spinner-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    place-items: center;
+    background: rgba(255,255,255,0.85);
+    z-index: 9999;
+  }
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 6px solid #ccc;
+    border-top: 6px solid #cc0000;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* DIALOG */
+  #warning-dialog {
+    position: fixed;
+    inset: 0;
+    display: none;
+    place-items: center;
+    background: rgba(0,0,0,0.6);
+    z-index: 10000;
+  }
+
+  .dialog-box {
+    background: #fff;
+    color: #333;
+    padding: 1.5rem;
+    border-radius: 12px;
+    max-width: 320px;
+    text-align: center;
+  }
+
+  .dialog-box h2 {
+    color: #cc0000;
+    margin-bottom: 0.5em;
+  }
+
+  .dialog-buttons {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .dialog-buttons button {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .ok {
+    background: #cc0000;
+    color: #fff;
+  }
+
+  .cancel {
+    background: #ccc;
+  }
+
+  /* MOBILE OPTIMIZATION */
+  @media (max-width: 480px) {
+    h1 { font-size: 1.8rem; }
+    .tagline { font-size: 1rem; }
+    .cta { font-size: 1.05rem; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+  <img src="traci-love.jpg" alt="Traci Love">
+  <div class="overlay"></div>
+
+  <div class="content">
+    <h1>Hey... it's me 💋</h1>
+    <p class="tagline">
+      I finally made a private space where we can talk without limits…
+    </p>
+
+    <button id="cta" class="cta">
+      Unlock My Private Chat 🔥
+    </button>
+
+    <p class="subtext">
+      Tap above to join me — I’ll be waiting 😉
+    </p>
+  </div>
+
+  <div class="footer">
+    © 2026 Traci Love · 18+ Only
+  </div>
+</div>
+
+<!-- Spinner -->
+<div id="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<!-- Warning Dialog -->
+<div id="warning-dialog">
+  <div class="dialog-box">
+    <h2>18+ Only</h2>
+    <p>This page leads to adult content. Continue?</p>
+    <div class="dialog-buttons">
+      <button class="ok">Yes</button>
+      <button class="cancel">No</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function detectSource() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("utm_source")) return urlParams.get("utm_source");
+
+  const ref = (document.referrer || "").toLowerCase();
+  if (ref.includes("instagram.com")) return "instagram";
+  if (ref.includes("facebook.com")) return "facebook";
+  if (ref.includes("reddit.com")) return "reddit";
+  if (ref.includes("x.com") || ref.includes("twitter.com")) return "x";
+  if (ref.includes("bsky.app")) return "bluesky";
+  return "default";
+}
+
+function getRedirectURL(source) {
+  switch (source) {
+    case "instagram": return "https://instagram.tracilovestoplay.com/traci04";
+    case "reddit": return "https://reddit.tracilovestoplay.com/traci05";
+    case "x":
+    case "twitter": return "https://x.tracilovestoplay.com/traci12";
+    case "bluesky": return "https://bluesky.tracilovestoplay.com/traci13";
+    default: return "https://connect.tracilovestoplay.com/traci01";
+  }
+}
+
+const cta = document.getElementById("cta");
+const spinner = document.getElementById("spinner-overlay");
+const dialog = document.getElementById("warning-dialog");
+
+const okBtn = dialog.querySelector(".ok");
+const cancelBtn = dialog.querySelector(".cancel");
+
+cta.addEventListener("click", () => {
+  dialog.style.display = "grid";
+});
+
+okBtn.addEventListener("click", () => {
+  dialog.style.display = "none";
+  spinner.style.display = "grid";
+
+  const source = detectSource();
+  const redirectURL = getRedirectURL(source);
+
+  setTimeout(() => {
+    window.location.href = redirectURL;
+  }, 1200);
+});
+
+cancelBtn.addEventListener("click", () => {
+  dialog.style.display = "none";
+});
+</script>
+
+</body>
+</html>
