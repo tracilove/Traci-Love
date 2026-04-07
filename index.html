@@ -92,6 +92,10 @@
     transform: translateY(-2px);
   }
 
+ .cta.disabled {
+  pointer-events: none;
+}
+
   .note {
     margin-top: 1rem;
     font-size: 0.8rem;
@@ -203,7 +207,10 @@
   <img src="lips.png" alt="lips" class="tagline-icon" />
 </p>
 
-    <button id="cta" class="cta">
+   <!--    
+   <button id="cta" class="cta"> 
+   -->
+    <button id="cta" class="cta disabled">
      CLICK HERE! <BR>
      Step into my world, you'll never want to leave!
     </button>
